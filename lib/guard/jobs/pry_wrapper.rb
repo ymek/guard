@@ -134,7 +134,7 @@ module Guard
         Pry.config.should_load_rc = false
         Pry.config.should_load_local_rc = false
         history_file_path = options[:history_file] || HISTORY_FILE
-        Pry.config.history.file = File.expand_path(history_file_path)
+        Pry.config.history_file = File.expand_path(history_file_path)
 
         _add_hooks(options)
 
@@ -266,7 +266,7 @@ module Guard
       # `pry`.
       #
       def _configure_prompt
-        Pry.config.prompt = [_prompt(">"), _prompt("*")]
+        Pry.config.prompt = Pry::Prompt.new(:guard, 'Default Guard prompt', [_prompt(">"), _prompt("*")])
       end
 
       # Returns the plugins scope, or the groups scope ready for display in the

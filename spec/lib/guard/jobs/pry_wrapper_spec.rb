@@ -9,6 +9,7 @@ RSpec.describe Guard::Jobs::PryWrapper do
   let(:pry_history) { double("pry_history") }
   let(:pry_commands) { double("pry_commands") }
   let(:pry_hooks) { double("pry_hooks") }
+  let(:pry_prompt) { double("pry_prompt") }
   let(:terminal_settings) { instance_double("Guard::Jobs::TerminalSettings") }
 
   let(:session) { instance_double("Guard::Internals::Session") }
@@ -24,13 +25,14 @@ RSpec.describe Guard::Jobs::PryWrapper do
     allow(pry_config).to receive(:should_load_local_rc=)
     allow(pry_config).to receive(:hooks).and_return(pry_hooks)
     allow(pry_config).to receive(:history).and_return(pry_history)
+    allow(pry_config).to receive(:history_file=)
     allow(pry_config).to receive(:commands).and_return(pry_commands)
-    allow(pry_history).to receive(:file=)
     allow(pry_commands).to receive(:alias_command)
     allow(pry_commands).to receive(:create_command)
     allow(pry_commands).to receive(:command)
     allow(pry_commands).to receive(:block_command)
     allow(pry_hooks).to receive(:add_hook)
+    allow(pry_prompt).to receive(:new).and_return(pry_prompt)
 
     allow(Guard).to receive(:listener).and_return(listener)
     allow(Pry).to receive(:config).and_return(pry_config)
